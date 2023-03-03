@@ -1,26 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 
 function App() {
-  const [value, setValue] = useState("");
+  const [count, setCount] = useState(0);
+  const countRef = useRef(0);
+  const style = {
+    border: "1px solid black",
+    margin: "10px",
+    padding: "10px",
+  };
+  const plusStateCountBtnHandler = () => {
+    setCount(count + 1);
+  };
+  const plusRefCountBtnHandler = () => {
+    countRef.current++;
+    console.log(countRef.current);
+  };
 
-  //clean up
-  useEffect(() => {
-    console.log(`hello useEffect : ${value}`);
-    return () => {
-      // 컴포넌트가 죽을 때 콘솔을 찍고 싶다.
-      // 이게 무슨 소리일까?
-    };
-  }, [value]);
   return (
-    <div>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-        }}
-      />
-    </div>
+    <>
+      <div style={style}>
+        {" "}
+        state 영역입니다. {count} <br />
+        <button onClick={plusStateCountBtnHandler}>state 증가</button>
+      </div>
+      <div style={style}>
+        ref 영역입니다. {countRef.current} <br />
+        <button onClick={plusRefCountBtnHandler}>ref증가</button>
+      </div>
+    </>
   );
 }
 
