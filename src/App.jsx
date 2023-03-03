@@ -1,42 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useCallback } from "react";
+import Box1 from "./components/Box1";
+import Box2 from "./components/Box2";
+import Box3 from "./components/Box3";
 
 function App() {
-  const [id, setId] = useState("");
-  const idRef = useRef("");
-  const pwRef = useRef("");
-  //화면이 렌더링 될 때, 어떤 작업을 하고 싶다 ! : useEffect !!!! r
-  useEffect(() => {
-    idRef.current.focus();
-    console.log(pwRef); // current가 input값으로 바뀜
-    console.log("랜더링 됐어요");
-  }, []);
-
-  // useEffect(() => {
-  //   if (id.length >= 10) {
-  //     return pwRef.current.focus();
-  //   }
-  // }, [id]);
+  console.log("App 컴포넌트가 렌더링 되었습니다.");
+  const [count, setCount] = useState(0);
+  //1 증가
+  const onPlusBtnClickHandler = () => {
+    setCount(count + 1);
+  };
+  const onMinusBtnClickHandler = () => {
+    setCount(count - 1);
+  };
+  // count 를 초기화해주는 함수
+  const initCount = useCallback(() => {
+    console.log(`${count}에서 0으로 변경되었습니다.`);
+    setCount(0);
+  }, [count]); // 의존성 배열에 대해 다시 한번 공부하기,,
+  // count가 변경될때 만큼은 다시 불러줘
 
   return (
     <>
-      <div>
-        아이디 :{" "}
-        <input
-          type="text"
-          ref={idRef}
-          value={id}
-          onChange={(e) => {
-            setId(e.target.value);
-            // 리액트에서 state 업데이트 방식은 배치 업데이트
-            // 내가 궁금해했던 하나씩 늦는 이유 -> 배치 업데이트
-            if (id.length >= 10) {
-              pwRef.current.focus();
-            }
-          }}
-        />
-      </div>
-      <div>
-        비밀번호 : <input type="password" ref={pwRef} />
+      <h3>카운트 예제입니다.</h3>
+      <p>현재 카운트 : {count}</p>
+      <button onClick={onPlusBtnClickHandler}>+</button>
+      <button onClick={onMinusBtnClickHandler}>-</button>
+      <div style={{ display: "flex", marginTop: "10px" }}>
+        <Box1 initCount={initCount} />
+        <Box2 />
+        <Box3 />
       </div>
     </>
   );
