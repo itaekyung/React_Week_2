@@ -1,20 +1,37 @@
 import React, { useState } from "react";
 
+const heavyWork = () => {
+  console.log("무거운 작업!");
+  return ["홍길동", "김민수"];
+};
+
 function App() {
-  const [time, setTime] = useState(1);
-  const handleClick = () => {
-    let newTime;
-    if (time >= 24) {
-      newTime = 1;
-    } else {
-      newTime = time + 1;
-    }
-    setTime(newTime);
+  const [names, setNames] = useState(() => {
+    return heavyWork();
+  }); // 무거운 작업일때는 초기값에 콜백함수를 넣기
+
+  const [input, setInput] = useState("");
+  const handleInputChange = (e) => {
+    return setInput(e.target.value);
   };
+  // const clickAddbtn = () => {
+  //   // const newNames = [input, ...names];
+  //   setNames([input, ...names]);
+  // };
+
+  const clickAddbtn = () => {
+    return setNames((아무이름) => {
+      return [input, ...아무이름];
+    });
+  };
+
   return (
     <div>
-      <span>현재 시각 : {time}시</span>
-      <button onClick={handleClick}>Update</button>
+      <input type="text" value={input} onChange={handleInputChange} />
+      <button onClick={clickAddbtn}>upload</button>
+      {names.map((name, i) => {
+        return <p key={i}>{name}</p>;
+      })}
     </div>
   );
 }
