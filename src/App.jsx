@@ -1,28 +1,21 @@
-import React from "react";
-import HeavyComponent from "./HeavyComponent";
+import React, { useState } from "react";
 
-//heavy work -> 엄청 무거운 작업일때 의미가 있음!
 function App() {
+  const [time, setTime] = useState(1);
+  const handleClick = () => {
+    let newTime;
+    if (time >= 24) {
+      newTime = 1;
+    } else {
+      newTime = time + 1;
+    }
+    setTime(newTime);
+  };
   return (
-    <>
-      <nav
-        style={{
-          backgroundColor: "yellow",
-          marginBottom: "30px",
-        }}
-      >
-        네비게이션 바
-      </nav>
-      <HeavyComponent />
-      <footer
-        style={{
-          backgroundColor: "green",
-          marginBottom: "30px",
-        }}
-      >
-        푸터 영역이에요
-      </footer>
-    </>
+    <div>
+      <span>현재 시각 : {time}시</span>
+      <button onClick={handleClick}>Update</button>
+    </div>
   );
 }
 
