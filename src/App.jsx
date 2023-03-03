@@ -28,7 +28,14 @@ function App() {
   return (
     <div>
       <input type="text" value={input} onChange={handleInputChange} />
-      <button onClick={clickAddbtn}>upload</button>
+      <button
+        onClick={() => {
+          clickAddbtn();
+          // return clickAddbtn(), clickAddbtn(), clickAddbtn();
+        }}
+      >
+        upload
+      </button>{" "}
       {names.map((name, i) => {
         return <p key={i}>{name}</p>;
       })}
